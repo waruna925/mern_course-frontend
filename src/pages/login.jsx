@@ -1,20 +1,28 @@
 import { useState } from "react"
 import axios from "axios"
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate=useNavigate()
 
-    async function handleLogin()  {
+    async function handleLogin() {
         try {
-            const response = await axios.post("http://localhost:5000/api/users/login", {
+            const response = await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/users/login", {
                 email: email,
                 password: password
             })
-            console.log(response)
+            console.log(response.data)
             toast.success("login successful")
+            localStorage.setItem("token", response.data.token)
+            if (response.data.role === "admin") {
+                navigate("/admin")
+            } else {
+                navigate("/")
+            }
         } catch (e) {
             toast.error(e.response.data.message)
         }
@@ -71,9 +79,17 @@ export default function Login() {
 
                     <button
                         onClick={handleLogin}
-                        className="bg-white text-black text-xl rounded-2xl
+                        className="
+                        bg-white text-black text-xl rounded-2xl
                         w-[320px] h-[45px] mt-9 font-semibold
-                        hover:bg-gray-200 transition"
+                        transition-all duration-300 ease-in-out
+
+                        hover:bg-gray-200
+                        hover:scale-105
+                        hover:shadow-2xl
+
+                        active:scale-95
+                        "
                     >
                         Login
                     </button>
