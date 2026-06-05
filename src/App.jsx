@@ -19,12 +19,11 @@ function App() {
       <>
       <Toaster position='top-middle' />
         <Routes path="/*">
-          <Route path="/" element={<Home/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<SignUp/>} />
           <Route path='/counter' element={<Counter/>} />
           <Route path='/admin/*' element={<AdminPanel/>} />
-          <Route path='/*' element={<h1 className='text-5xl text-red-500 text-center'>404 Not Found</h1>} />
+          <Route path='/*' element={<Home/>} />
         </Routes>
       </>
     </BrowserRouter>
