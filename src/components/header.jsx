@@ -6,17 +6,17 @@ export default function Header(){
     const navigate=useNavigate()
 
     return(
-        <div className='w-full h-[80px] shadow-2xl flex '>
-            <img src="/logo.png" alt="logo" className='h-auto w-[95px] cursor-pointer' onClick={
+        <div className='w-full h-[80px] drop-shadow-2xl flex bg-secondary text-primary'>
+            <img src="/logo1.png" alt="logo" className='h-auto w-[95px] cursor-pointer object-cover ' onClick={
                 ()=>{
                     navigate('/')
                 }
             } />
-            <div className='h-full w-[calc(100%-190px)] flex items-center justify-center gap-10 text-xl text-white font-bold'>
-                <Link to="/" className="block p-4 text-black ">Home</Link>
-                <Link to="/products" className="block p-4 text-black">Products</Link>
-                <Link to="/contact" className="block p-4 text-black">Contact</Link>
-                <Link to="/about" className="block p-4 text-black">About</Link>
+            <div className='h-full w-[calc(100%-190px)] flex items-center justify-center gap-10 text-xl  font-bold'>
+                <Link to="/" className="block p-4  ">Home</Link>
+                <Link to="/products" className="block p-4 ">Products</Link>
+                <Link to="/contact" className="block p-4 ">Contact</Link>
+                <Link to="/about" className="block p-4 ">About</Link>
             </div>
             <div className='h-full w-[95px]  flex items-center justify-center  font-bold'>Profile</div>
         </div>

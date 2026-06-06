@@ -53,7 +53,7 @@ export default function AdminProduct() {
     }
 
     return (
-        <div className="relative w-full h-full  border-8 border-black  overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 ">
+        <div className="relative w-full h-full  border-8 border-black  overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 pb-18">
             <Link to="/admin/add-product" className=" fixed right-6 bottom-6 bg-blue-500 text-white py-2 px-4 font-bold rounded-md">+ Add Product</Link>
             {!isLoading ?
                 <table className="w-full text-center  border border-black">
@@ -67,14 +67,14 @@ export default function AdminProduct() {
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody className="border border-black">
+                <tbody className="border border-secondary">
                     {products.map(
                         (product, index) => {
                             return (
                                 <tr key={index} className="border border-black">
                                     <td>{product.productId}</td>
                                     <td>{product.name}</td>
-                                    <td><img src={product.images[0]} alt="img" className="w-[150px] h-auto mx-auto my-auto" /></td>
+                                    <td><img src={product.images[0]} alt="img" className="w-[150px] h-auto mx-auto my-auto p-1.5" /></td>
                                     <td>{product.labeledPrice}</td>
                                     <td>{product.stock}</td>
                                     <td>

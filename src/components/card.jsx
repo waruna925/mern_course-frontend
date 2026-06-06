@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Card({ product }) {
   const hasDiscount = product.labelledPrice > product.price;
   const discountPct = hasDiscount
@@ -8,18 +10,18 @@ export default function Card({ product }) {
     !product.isAvailable || product.stock === 0
       ? "Out of stock"
       : product.stock <= 5
-      ? `Low stock · ${product.stock} left`
-      : `In stock · ${product.stock} left`;
+        ? `Low stock · ${product.stock} left`
+        : `In stock · ${product.stock} left`;
 
   const stockColor =
     !product.isAvailable || product.stock === 0
       ? "#E24B4A"
       : product.stock <= 5
-      ? "#EF9F27"
-      : "#1D9E75";
+        ? "#EF9F27"
+        : "#1D9E75";
 
   return (
-    <div className="group w-64 rounded-2xl overflow-hidden border border-gray-100 bg-white hover:-translate-y-1.5 transition-transform duration-300 cursor-pointer">
+    <Link to={"/product/"+product.productId} className="group w-64 rounded-2xl overflow-hidden border border-gray-100 bg-white hover:-translate-y-1.5 transition-transform duration-300 cursor-pointer">
 
       {/* Image */}
       <div className="relative h-52 overflow-hidden bg-stone-100">
@@ -80,6 +82,6 @@ export default function Card({ product }) {
           {product.isAvailable && product.stock > 0 ? "Add to cart" : "Notify me"}
         </button>
       </div>
-    </div>
+    </Link>
   );
 }
