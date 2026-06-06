@@ -21,7 +21,7 @@ export default function Product(){
     )
 
     return(
-        <div className="w-full h-full flex items-center justify-center gap-10 flex-wrap py-10"> 
+        <div className="w-full h-full flex items-center justify-center gap-10 flex-wrap py-10 bg-primary"> 
             {
                 product.map(
                     (prod) => (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useParams } from "react-router-dom"
 import ImageSlider from "./imageSlider"
+import { addToCart, getCart } from "../../utils/cart"
 
 export default function ProductOverview() {
     const params = useParams()
@@ -58,18 +59,22 @@ export default function ProductOverview() {
                 <span className="text-2xl font-semibold text-gray-400 line-through">
                     ${product.labelledPrice}
                 </span>
-                <span className="text-3xl font-bold text-green-600">
+                <span className="text-3xl font-bold text-accent">
                     ${product.price}
                 </span>
             </div>
 
             {/* BUTTONS */}
             <div className="flex justify-center gap-4 mt-8">
-                <button className="bg-black text-white py-2.5 px-6 rounded-xl hover:bg-gray-800 transition">
+                <button className="bg-black text-white py-2.5 px-6 rounded-xl hover:bg-gray-800 transition" onClick={()=>{
+                    console.log(getCart())
+                    addToCart(product,1)
+                    console.log(getCart())
+                }}>
                     Add to Cart
                 </button>
 
-                <button className="bg-green-600 text-white py-2.5 px-6 rounded-xl hover:bg-green-700 transition">
+                <button className="bg-accent text-white py-2.5 px-6 rounded-xl hover:bg-green-700 transition">
                     Buy Now
                 </button>
             </div>

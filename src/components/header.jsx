@@ -7,7 +7,7 @@ export default function Header(){
 
     return(
         <div className='w-full h-[80px] drop-shadow-2xl flex bg-secondary text-primary'>
-            <img src="/logo1.png" alt="logo" className='h-auto w-[95px] cursor-pointer object-cover ' onClick={
+            <img src="/logo2.png" alt="logo" className='h-auto w-[170px] cursor-pointer object-cover ' onClick={
                 ()=>{
                     navigate('/')
                 }
