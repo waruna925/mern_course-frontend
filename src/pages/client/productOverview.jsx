@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import ImageSlider from "./imageSlider"
 import { addToCart, getCart } from "../../utils/cart"
 import Loading from "../../components/loading"
@@ -11,6 +11,7 @@ export default function ProductOverview() {
     const [status, setStatus] = useState("loading")//loading,success,error
     const productId = params.id
     const [product, setProduct] = useState(null)
+    const navigate = useNavigate()
     useEffect(
         () => {
             axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId).then(
@@ -75,7 +76,23 @@ export default function ProductOverview() {
                                 Add to Cart
                             </button>
 
-                            <button className="bg-accent text-white py-2.5 px-6 rounded-xl hover:bg-green-700 transition">
+                            <button onClick={() =>
+                                navigate("/checkout", {
+                                    state: {
+                                        cart: [
+                                            {
+                                                product: {
+                                                    productId: product.productId,
+                                                    name: product.name,
+                                                    price: product.price,
+                                                    labelledPrice: product.labelledPrice,
+                                                    images: product.images,
+                                                }, qty: 1
+                                            },
+                                        ],
+                                    },
+                                })
+                            } className="bg-accent text-white py-2.5 px-6 rounded-xl hover:bg-green-700 transition">
                                 Buy Now
                             </button>
                         </div>
