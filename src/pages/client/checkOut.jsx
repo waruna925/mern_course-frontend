@@ -1,18 +1,35 @@
 import { useState } from "react";
-import { addToCart, getCart, removeFromCart } from "../../utils/cart";
 import { BiMinus, BiPlus, BiTrash } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function Cart() {
-    const [cart, setCart] = useState(getCart());
+export default function CheckOut() {
+
+    const location = useLocation()
+    const [cart, setCart] = useState(location.state.cart);
+    
+
+    function removeFromCart(index) {
+        const newCart=cart.filter((item,i)=>i !== index)
+        setCart(newCart)
+    }
+    function changeQty(index,qty){
+        const newCart=[...cart]
+        if(qty<=0){
+            removeFromCart(index)
+        }else{
+            newCart[index].qty=qty
+            setCart(newCart)
+        }
+    }
+
 
     return (
         <div className="w-full flex flex-col items-center pt-4 pb-30 bg-gray-100 min-h-[calc(100vh-80px)] relative">
             {
-                cart.map((item) => {
+                cart.map((item,index) => {
                     return (
                         <div
-                            key={item.product.productId}
+                            key={item.productId}
                             className="relative w-[600px] h-[120px] bg-white rounded-xl shadow-lg flex items-center mb-5 overflow-visible"
                         >
                             {/* Product Image */}
@@ -44,8 +61,7 @@ export default function Cart() {
                             {/* Quantity */}
                             <div className="w-[100px] h-full flex items-center justify-center px-4">
                                 <button onClick={() => {
-                                    addToCart(item.product, 1)
-                                    setCart(getCart)
+                                    changeQty(index,item.qty+1)
                                 }}>
                                     <BiPlus />
                                 </button>
@@ -55,8 +71,7 @@ export default function Cart() {
                                 </p>
 
                                 <button onClick={() => {
-                                    addToCart(item.product, -1)
-                                    setCart(getCart)
+                                    changeQty(index,item.qty-1)
                                 }}>
                                     <BiMinus />
                                 </button>
@@ -71,8 +86,7 @@ export default function Cart() {
 
                             {/* Trash Button */}
                             <button onClick={() => {
-                                removeFromCart(item.product.productId)
-                                setCart(getCart)
+                                removeFromCart(index)
                             }} className="absolute -right-10 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 transition-all duration-200 hover:scale-110">
                                 <BiTrash size={18} />
                             </button>
@@ -107,15 +121,11 @@ export default function Cart() {
                     </p>
                 </div>
 
-                <Link to="/checkout" state={
-                    {
-                        cart: cart
-                    }
-                } className="bg-secondary text-primary px-8 py-3 rounded-xl font-semibold hover:bg-accent hover:text-white transition-all">
-                Checkout
-                </Link>
+                <button className="bg-secondary text-primary px-8 py-3 rounded-xl font-semibold hover:bg-accent hover:text-white transition-all">
+                    Place Order
+                </button>
 
+            </div>
         </div>
-        </div >
     );
 }

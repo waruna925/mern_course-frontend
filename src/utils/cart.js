@@ -1,9 +1,11 @@
 export function getCart(){
     let cart=localStorage.getItem("cart")
-    cart=JSON.parse(cart)
+    
     if(cart==null){
         cart=[]
         localStorage.setItem("cart",JSON.stringify(cart))
+    }else{
+        cart=JSON.parse(cart)
     }
     return cart;
 }
@@ -28,6 +30,7 @@ export function addToCart(product,qty){
         cart[index].qty+=qty
         if(cart[index].qty<=0){
             removeFromCart(product.productId)
+            return
         }
 
     }
