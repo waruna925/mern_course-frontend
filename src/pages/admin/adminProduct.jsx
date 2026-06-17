@@ -53,57 +53,94 @@ export default function AdminProduct() {
     }
 
     return (
-        <div className="relative w-full h-full  border-8 border-black  overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 pb-18">
-            <Link to="/admin/add-product" className=" fixed right-6 bottom-6 bg-blue-500 text-white py-2 px-4 font-bold rounded-md">+ Add Product</Link>
-            {!isLoading ?
-                <table className="w-full text-center  border border-black">
-                <thead>
-                    <tr>
-                        <th>Product ID</th>
-                        <th>Product Name</th>
-                        <th>Product Image</th>
-                        <th>Labeled Price</th>
-                        <th>Stock</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody className="border border-secondary">
-                    {products.map(
-                        (product, index) => {
-                            return (
-                                <tr key={index} className="border border-black">
-                                    <td>{product.productId}</td>
-                                    <td>{product.name}</td>
-                                    <td><img src={product.images[0]} alt="img" className="w-[150px] h-auto mx-auto my-auto p-1.5" /></td>
-                                    <td>{product.labeledPrice}</td>
-                                    <td>{product.stock}</td>
-                                    <td>
-                                        <div className="flex justify-center items-center gap-3 cursor-pointer">
-                                            <FaTrashAlt onClick={
-                                                ()=>{
-                                                    deleteProduct(product.productId)
-                                                }
-                                            } className="text-red-500"/>
-                                            <FaEdit onClick={
-                                                ()=>{
-                                                    navigate("/admin/edit-product",{
-                                                        state:product
-                                                    })
-                                                }
-                                            }
-                                             className="text-blue-500"/>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )
-                        }
-                    )}
-                </tbody>
-            </table>
-            : <div className="w-full h-full flex items-center justify-center"><div className="w-[50px] h-[50px] border-4 border-t-amber-200 rounded-full animate-spin"></div>
-            </div>
-            }
-            
-        </div>
-    )
+  <div className="relative w-full h-full bg-primary rounded-xl shadow-lg overflow-y-auto p-6">
+
+    <Link
+      to="/admin/add-product"
+      className="fixed right-8 bottom-8 bg-accent text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition-all duration-300"
+    >
+      + Add Product
+    </Link>
+
+    {!isLoading ? (
+      <div className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-200">
+        <table className="w-full">
+          <thead>
+            <tr className="bg-secondary text-primary">
+              <th className="py-4 px-3">Product ID</th>
+              <th className="py-4 px-3">Product Name</th>
+              <th className="py-4 px-3">Image</th>
+              <th className="py-4 px-3">Price</th>
+              <th className="py-4 px-3">Stock</th>
+              <th className="py-4 px-3">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {products.map((product, index) => (
+              <tr
+                key={index}
+                className="border-b border-gray-200 hover:bg-green-50 transition-all duration-200"
+              >
+                <td className="py-4 px-3 text-center">
+                  {product.productId}
+                </td>
+
+                <td className="py-4 px-3 font-medium text-secondary">
+                  {product.name}
+                </td>
+
+                <td className="py-4 px-3">
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-20 h-20 object-cover rounded-lg mx-auto border"
+                  />
+                </td>
+
+                <td className="py-4 px-3 text-center font-semibold text-accent">
+                  Rs. {product.price}
+                </td>
+
+                <td className="py-4 px-3 text-center">
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                    {product.stock}
+                  </span>
+                </td>
+
+                <td className="py-4 px-3">
+                  <div className="flex justify-center gap-4 text-xl">
+
+                    <button
+                      onClick={() => deleteProduct(product.productId)}
+                      className="text-red-500 hover:text-red-700 transition-all"
+                    >
+                      <FaTrashAlt />
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        navigate("/admin/edit-product", {
+                          state: product,
+                        })
+                      }
+                      className="text-accent hover:text-green-700 transition-all"
+                    >
+                      <FaEdit />
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="w-14 h-14 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )}
+  </div>
+);
 }
