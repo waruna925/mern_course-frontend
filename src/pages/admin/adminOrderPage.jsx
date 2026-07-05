@@ -75,7 +75,7 @@ export default function AdminOrderPage() {
                                     </td>
 
                                     <td className="py-4 px-3 text-center font-semibold text-accent">
-                                        Rs. {order.total}
+                                        Rs. {order.totalAmount}
                                     </td>
 
                                     <td className="py-4 px-3 text-center">
