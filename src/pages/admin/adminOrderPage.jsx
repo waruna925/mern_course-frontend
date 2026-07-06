@@ -79,18 +79,28 @@ export default function AdminOrderPage() {
                                     </td>
 
                                     <td className="py-4 px-3 text-center">
-                                        <span
-                                            className={`px-3 py-1 rounded-full text-sm font-medium
-                                                ${
-                                                    order.status === "Delivered"
-                                                        ? "bg-green-100 text-green-700"
-                                                        : order.status === "Pending"
-                                                        ? "bg-yellow-100 text-yellow-700"
-                                                        : "bg-red-100 text-red-700"
-                                                }`}
-                                        >
-                                            {order.status}
-                                        </span>
+                                        
+                                        <select value={order.status}
+                                            onChange={async (e) => {
+                                            const updatedStatus = e.target.value;
+                                            try {
+                                                const token=localStorage.getItem("token")
+                                                await axios.put(import.meta.env.VITE_BACKEND_URL + "/api/orders/" + order.orderId + "/" + updatedStatus,{},
+                                                    { headers: { Authorization: `Bearer ${token}` } }
+                                                );
+                                                setIsLoading(true)
+                                                
+                                            } catch (error) {
+                                                console.error("Error updating order status:", error);
+                                            }
+                                        }}>
+                                            
+                                            <option value="pending">pending</option>
+                                            <option value="completed">completed</option>
+                                            <option value="cancelled">cancelled</option>
+                                            <option value="returned">returned</option>
+
+                                        </select>
                                     </td>
                                 </tr>
                             ))}
