@@ -7,13 +7,13 @@ export default function Cart() {
     const [cart, setCart] = useState(getCart());
 
     return (
-        <div className="w-full flex flex-col items-center pt-4 pb-30 bg-gray-100 min-h-[calc(100vh-80px)] relative">
+        <div className="w-full flex flex-col items-center pt-4 pb-30 bg-gray-100 min-h-[calc(100vh-80px)] ">
             {
                 cart.map((item) => {
                     return (
                         <div
                             key={item.product.productId}
-                            className="relative w-[600px] h-[120px] bg-white rounded-xl shadow-lg flex items-center mb-5 overflow-visible"
+                            className=" w-[600px] h-[120px] bg-white rounded-xl shadow-lg flex items-center mb-5 overflow-visible"
                         >
                             {/* Product Image */}
                             <img

@@ -6,111 +6,109 @@ export default function AdminOrderPage() {
     const [orders, setOrders] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(()=>{
-        if(isLoading){
-            const token=localStorage.getItem("token")
-            if(!token){
+    useEffect(() => {
+        if (isLoading) {
+            const token = localStorage.getItem("token")
+            if (!token) {
                 toast.error("Please login to view orders")
                 return
             }
-            axios.get(import.meta.env.VITE_BACKEND_URL + "/api/orders", {headers:{Authorization:`Bearer ${token}`}}).then((res)=>{
+            axios.get(import.meta.env.VITE_BACKEND_URL + "/api/orders", { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
                 console.log(res.data)
                 setOrders(res.data)
                 setIsLoading(false)
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err)
                 toast.error("Something went wrong")
             })
         }
     })
     return (
-    <div className="w-full h-full max-h-full overflow-auto p-6">
+        <div className="w-full h-full max-h-full  p-6">
 
-        {
-            isLoading ? (
-                <Loading />
-            ) : (
-                <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
-
-                    <table className="w-full">
-                        <thead>
-                            <tr className="bg-secondary text-primary">
-                                <th className="py-4 px-3 text-left">ID</th>
-                                <th className="py-4 px-3 text-left">Name</th>
-                                <th className="py-4 px-3 text-left">Address</th>
-                                <th className="py-4 px-3 text-left">Phone</th>
-                                <th className="py-4 px-3 text-left">Email</th>
-                                <th className="py-4 px-3 text-left">Date</th>
-                                <th className="py-4 px-3 text-center">Total</th>
-                                <th className="py-4 px-3 text-center">Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {orders.map((order, index) => (
-                                <tr
-                                    key={index}
-                                    className="border-b border-gray-200 hover:bg-green-50 transition-all duration-200"
-                                >
-                                    <td className="py-4 px-3">{order.orderId}</td>
-
-                                    <td className="py-4 px-3 font-medium text-secondary">
-                                        {order.name}
-                                    </td>
-
-                                    <td className="py-4 px-3 max-w-[250px]">
-                                        {order.address}
-                                    </td>
-
-                                    <td className="py-4 px-3">
-                                        {order.pNumber}
-                                    </td>
-
-                                    <td className="py-4 px-3">
-                                        {order.email}
-                                    </td>
-
-                                    <td className="py-4 px-3">
-                                        {new Date(order.date).toLocaleDateString()}
-                                    </td>
-
-                                    <td className="py-4 px-3 text-center font-semibold text-accent">
-                                        Rs. {order.totalAmount}
-                                    </td>
-
-                                    <td className="py-4 px-3 text-center">
-                                        
-                                        <select value={order.status}
-                                            onChange={async (e) => {
-                                            const updatedStatus = e.target.value;
-                                            try {
-                                                const token=localStorage.getItem("token")
-                                                await axios.put(import.meta.env.VITE_BACKEND_URL + "/api/orders/" + order.orderId + "/" + updatedStatus,{},
-                                                    { headers: { Authorization: `Bearer ${token}` } }
-                                                );
-                                                setIsLoading(true)
-                                                
-                                            } catch (error) {
-                                                console.error("Error updating order status:", error);
-                                            }
-                                        }}>
-                                            
-                                            <option value="pending">pending</option>
-                                            <option value="completed">completed</option>
-                                            <option value="cancelled">cancelled</option>
-                                            <option value="returned">returned</option>
-
-                                        </select>
-                                    </td>
+            {
+                isLoading ? (
+                    <Loading />
+                ) : (
+                    <div className="max-h-[600px] overflow-y-auto  border rounded-xl">
+                        <table className="w-full table-auto border-collapse">
+                            <thead className="sticky top-0 z-10 bg-secondary">
+                                <tr className="text-primary">
+                                    <th className="py-4 px-3 text-left">ID</th>
+                                    <th className="py-4 px-3 text-left">Name</th>
+                                    <th className="py-4 px-3 text-left">Address</th>
+                                    <th className="py-4 px-3 text-left">Phone</th>
+                                    <th className="py-4 px-3 text-left">Email</th>
+                                    <th className="py-4 px-3 text-left">Date</th>
+                                    <th className="py-4 px-3 text-center">Total</th>
+                                    <th className="py-4 px-3 text-center">Status</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
 
-                </div>
-            )
-        }
+                            <tbody>
+                                {orders.map((order, index) => (
+                                    <tr
+                                        key={index}
+                                        className="border-b border-gray-200 hover:bg-green-50 transition-all duration-200"
+                                    >
+                                        <td className="py-4 px-3">{order.orderId}</td>
 
-    </div>
-);
+                                        <td className="py-4 px-3 font-medium text-secondary">
+                                            {order.name}
+                                        </td>
+
+                                        <td className="py-4 px-3 max-w-[250px]">
+                                            {order.address}
+                                        </td>
+
+                                        <td className="py-4 px-3">
+                                            {order.pNumber}
+                                        </td>
+
+                                        <td className="py-4 px-3">
+                                            {order.email}
+                                        </td>
+
+                                        <td className="py-4 px-3">
+                                            {new Date(order.date).toLocaleDateString()}
+                                        </td>
+
+                                        <td className="py-4 px-3 text-center font-semibold text-accent">
+                                            Rs. {order.totalAmount}
+                                        </td>
+
+                                        <td className="py-4 px-3 text-center">
+
+                                            <select value={order.status}
+                                                onChange={async (e) => {
+                                                    const updatedStatus = e.target.value;
+                                                    try {
+                                                        const token = localStorage.getItem("token")
+                                                        await axios.put(import.meta.env.VITE_BACKEND_URL + "/api/orders/" + order.orderId + "/" + updatedStatus, {},
+                                                            { headers: { Authorization: `Bearer ${token}` } }
+                                                        );
+                                                        setIsLoading(true)
+
+                                                    } catch (error) {
+                                                        console.error("Error updating order status:", error);
+                                                    }
+                                                }}>
+
+                                                <option value="pending">pending</option>
+                                                <option value="completed">completed</option>
+                                                <option value="cancelled">cancelled</option>
+                                                <option value="returned">returned</option>
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
+
+        </div>
+    );
 }

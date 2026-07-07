@@ -9,7 +9,7 @@ export default function Card({ product }) {
       {/* ALL NAVIGATION CONTENT */}
       <Link to={"/product/" + product.productId}>
         {/* Image */}
-        <div className="relative h-52 overflow-hidden bg-secondary/10">
+        <div className=" h-52 overflow-hidden bg-secondary/10">
           <img
             src={product.images?.[0]}
             alt={product.name}

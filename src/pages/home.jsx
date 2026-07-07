@@ -5,6 +5,7 @@ import ProductOverview from "./client/productOverview";
 import Cart from "./client/cart";
 import CheckOut from "./client/checkOut";
 import AskAI from "./client/askAi";
+import TestPage from "./testPage";
 
 export default function Home(){
     return(
@@ -20,6 +21,7 @@ export default function Home(){
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<CheckOut />} />
                     <Route path="/askAI" element={<AskAI />} />
+                    <Route path="/test" element={<TestPage />} />
                     <Route path="*" element={<h1>Not Found</h1>} />
                 </Routes>
             </div>
