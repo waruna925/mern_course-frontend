@@ -9,38 +9,47 @@ export default function Header() {
     const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
 
     return (
-        <div className='w-full h-[80px] drop-shadow-2xl flex bg-secondary text-primary justify-center items-center relative px-4 md:px-8'>
-            <div className='w-full max-w-7xl flex items-center justify-between h-full relative'>
+        <div className='w-full h-[80px] drop-shadow-2xl flex bg-secondary text-primary justify-center items-center sticky top-0 z-50 px-4 md:px-8'>
+            {/* The outer container remains a flex row on mobile, and a 3-column grid on desktop */}
+            <div className='w-full max-w-7xl flex md:grid md:grid-cols-3 items-center justify-between h-full relative'>
                 
-                {/* Left Side Container: Mobile Hamburger & Desktop Links */}
-                <div className='flex items-center gap-8 h-full'>
+                {/* Left Side: Mobile Hamburger & Desktop Logo placement */}
+                <div className='flex items-center gap-4 h-full z-10'>
                     {/* Mobile Hamburger */}
                     <GiHamburgerMenu 
                         className='md:hidden text-3xl cursor-pointer hover:opacity-80 transition-opacity' 
                         onClick={() => setSideDrawerOpen(true)} 
                     />
 
-                    {/* Desktop Navigation Links (Pushed left to make room for center logo) */}
-                    <div className='hidden md:flex items-center gap-6 text-xl font-bold'>
-                        <Link to="/" className="hover:text-accent transition-colors">Home</Link>
-                        <Link to="/products" className="hover:text-accent transition-colors">Products</Link>
-                        <Link to="/contact" className="hover:text-accent transition-colors">Contact</Link>
-                        <Link to="/about" className="hover:text-accent transition-colors">About</Link>
-                    </div>
-                </div>
-
-                {/* Center: Brand Logo (Perfectly centered on both Mobile and Desktop) */}
-                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex justify-center items-center'>
+                    {/* Desktop Logo Placement (Hidden on mobile grid tracking) */}
                     <img 
                         src="/logo2.png" 
                         alt="logo" 
-                        className='h-12 w-auto cursor-pointer object-contain' 
+                        className='hidden md:block h-18  w-auto cursor-pointer object-contain' 
+                        onClick={() => navigate('/')} 
+                    />
+                </div>
+
+                {/* Center Navigation Links (Desktop only) */}
+                <div className='hidden md:flex items-center justify-self-center gap-8 text-xl font-bold h-full'>
+                    <Link to="/" className="hover:text-accent transition-colors">Home</Link>
+                    <Link to="/products" className="hover:text-accent transition-colors">Products</Link>
+                    <Link to="/contact" className="hover:text-accent transition-colors">Contact</Link>
+                    <Link to="/about" className="hover:text-accent transition-colors">About</Link>
+                </div>
+
+                {/* Center Mobile Logo: Explicitly centered via absolute coordinates on mobile view only */}
+                <div className='absolute md:hidden left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto'>
+                    <img 
+                        src="/logo2.png" 
+                        alt="logo" 
+                        className='h-18 w-auto cursor-pointer object-contain' 
                         onClick={() => navigate('/')} 
                     />
                 </div>
 
                 {/* Right Side Container: Actions Menu & Ask AI */}
-                <div className='flex items-center gap-4 md:gap-6 h-full'>
+                <div className='flex items-center justify-self-end gap-4 md:gap-6 h-full z-10'>
                     {/* Ask AI Accent Button (Desktop only) */}
                     <Link
                         to="/askAI"
@@ -67,7 +76,7 @@ export default function Header() {
             {/* Side Mobile Drawer */}
             {sideDrawerOpen && (
                 <div
-                    className="fixed inset-0 z-50 md:hidden"
+                    className="fixed inset-0 z-[100] md:hidden"
                     onClick={() => setSideDrawerOpen(false)}
                 >
                     {/* Backdrop Overlay */}
@@ -76,14 +85,14 @@ export default function Header() {
                     {/* Drawer Content Body */}
                     <div
                         onClick={(e) => e.stopPropagation()}
-                        className="absolute left-0 top-0 h-screen w-[82%] max-w-[320px] bg-white flex flex-col shadow-2xl z-50 text-slate-800"
+                        className="absolute left-0 top-0 h-screen w-[82%] max-w-[320px] bg-white flex flex-col shadow-2xl text-slate-800"
                     >
                         {/* Drawer Brand Header */}
                         <div className="h-20 min-h-[80px] flex items-center justify-between px-5 border-b border-slate-100 bg-secondary shrink-0">
                             <img
                                 src="/logo2.png"
                                 alt="logo"
-                                className="h-10 cursor-pointer object-contain"
+                                className="h-18 cursor-pointer object-contain"
                                 onClick={() => {
                                     navigate("/");
                                     setSideDrawerOpen(false);
@@ -134,7 +143,7 @@ export default function Header() {
                                     onClick={() => setSideDrawerOpen(false)}
                                     className="flex items-center justify-center gap-2 h-12 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-all shadow-md w-full"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                    <svg xmlns="http://www.w3.org/2000/xl" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21L8.188 15.904L3 15L8.188 14.096L9 9L9.813 14.096L15 15L9.813 15.904Z" />
                                     </svg>
                                     <span>Ask AI</span>

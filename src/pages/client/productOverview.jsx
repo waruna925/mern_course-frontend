@@ -31,18 +31,26 @@ export default function ProductOverview() {
     return (
         <>
             {status === "success" && product &&
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full  flex flex-col md:flex-row items-center justify-center py-4">
+                    <h1 className=" md:hidden text-center font-bold text-4xl leading-snug">
+                            {product.name}
+                            {product.altNames.map((altName, index) => (
+                                <span key={index} className="text-xl text-gray-500 font-normal">
+                                    {" | " + altName}
+                                </span>
+                            ))}
+                        </h1>
 
                     {/* LEFT IMAGE */}
-                    <div className="w-[50%] min-h-[calc(100vh-80px)] flex items-center justify-center bg-primary px-4">
+                    <div className="w-full md:w-[50%] h-full md:min-h-[calc(100vh-80px)] flex items-center justify-center bg-primary px-4 py-2">
                         <ImageSlider images={product.images} />
                     </div>
 
                     {/* RIGHT DETAILS */}
-                    <div className="w-[50%] min-h-[calc(100vh-80px)] flex flex-col justify-center px-10 bg-primary">
+                    <div className="w-full md:w-[50%] h-full md:min-h-[calc(100vh-80px)] flex flex-col justify-center px-10 bg-primary">
 
                         {/* TITLE */}
-                        <h1 className="text-center font-bold text-4xl leading-snug">
+                        <h1 className="hidden md:block text-center font-bold text-4xl leading-snug">
                             {product.name}
                             {product.altNames.map((altName, index) => (
                                 <span key={index} className="text-xl text-gray-500 font-normal">

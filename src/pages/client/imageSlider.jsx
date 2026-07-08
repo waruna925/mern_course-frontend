@@ -4,7 +4,7 @@ export default function ImageSlider(props){
     const images=props.images
     const [currentIndex, setCurrentIndex] = useState(0)
     return(
-        <div className="w-[500px] h-[600px] ">
+        <div className="w-[90%] max-w-[500px] md:w-[500px] h-[600px] ">
             <img src={images[currentIndex]} alt="" className="w-full h-[500px] object-cover rounded-2xl"/>
             <div className="w-full h-[100px]  flex justify-center items-center flex-row scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 overflow-x-auto overflow-y-hidden">
                 {
