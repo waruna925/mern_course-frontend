@@ -2,31 +2,36 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IoCartOutline } from 'react-icons/io5'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import './header.css'
+
 
 export default function Header() {
     const navigate = useNavigate()
     const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+        setSideDrawerOpen(false);
+    };
 
     return (
         <div className='w-full h-[80px] drop-shadow-2xl flex bg-secondary text-primary justify-center items-center sticky top-0 z-50 px-4 md:px-8'>
             {/* The outer container remains a flex row on mobile, and a 3-column grid on desktop */}
             <div className='w-full max-w-7xl flex md:grid md:grid-cols-3 items-center justify-between h-full relative'>
-                
+
                 {/* Left Side: Mobile Hamburger & Desktop Logo placement */}
                 <div className='flex items-center gap-4 h-full z-10'>
                     {/* Mobile Hamburger */}
-                    <GiHamburgerMenu 
-                        className='md:hidden text-3xl cursor-pointer hover:opacity-80 transition-opacity' 
-                        onClick={() => setSideDrawerOpen(true)} 
+                    <GiHamburgerMenu
+                        className='md:hidden text-3xl cursor-pointer hover:opacity-80 transition-opacity'
+                        onClick={() => setSideDrawerOpen(true)}
                     />
 
                     {/* Desktop Logo Placement (Hidden on mobile grid tracking) */}
-                    <img 
-                        src="/logo2.png" 
-                        alt="logo" 
-                        className='hidden md:block h-18  w-auto cursor-pointer object-contain' 
-                        onClick={() => navigate('/')} 
+                    <img
+                        src="/logo2.png"
+                        alt="logo"
+                        className='hidden md:block h-18  w-auto cursor-pointer object-contain'
+                        onClick={() => navigate('/')}
                     />
                 </div>
 
@@ -40,11 +45,11 @@ export default function Header() {
 
                 {/* Center Mobile Logo: Explicitly centered via absolute coordinates on mobile view only */}
                 <div className='absolute md:hidden left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto'>
-                    <img 
-                        src="/logo2.png" 
-                        alt="logo" 
-                        className='h-18 w-auto cursor-pointer object-contain' 
-                        onClick={() => navigate('/')} 
+                    <img
+                        src="/logo2.png"
+                        alt="logo"
+                        className='h-18 w-auto cursor-pointer object-contain'
+                        onClick={() => navigate('/')}
                     />
                 </div>
 
@@ -65,11 +70,24 @@ export default function Header() {
                     <Link to="/cart" className='text-3xl flex items-center justify-center hover:text-accent transition-colors'>
                         <IoCartOutline className='cursor-pointer' />
                     </Link>
-                    
+
                     {/* Profile Link (Desktop only) */}
-                    <Link to="/profile" className='hidden md:block font-bold hover:text-accent transition-colors'>
-                        Profile
-                    </Link>
+                    <div className="hidden md:flex items-center gap-4">
+                        <Link
+                            to="/profile"
+                            className="font-bold hover:text-accent transition-colors"
+                        >
+                            Profile
+                        </Link>
+
+                        <button
+                            onClick={handleLogout}
+                            className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+                        >
+                            Logout
+                        </button>
+                    </div>
+
                 </div>
             </div>
 
@@ -172,6 +190,12 @@ export default function Header() {
                                     P
                                 </div>
                             </Link>
+                            <button
+                                onClick={handleLogout}
+                                className="w-full flex items-center justify-center px-6 h-14 bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors border-t border-slate-200"
+                            >
+                                Logout
+                            </button>
                         </div>
                     </div>
                 </div>
