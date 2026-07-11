@@ -6,6 +6,7 @@ import Cart from "./client/cart";
 import CheckOut from "./client/checkOut";
 import AskAI from "./client/askAi";
 import TestPage from "./testPage";
+import SearchProduct from "../components/searchProduct";
 
 export default function Home(){
     return(
@@ -18,6 +19,7 @@ export default function Home(){
                     <Route path="/contact" element={<h1>contact</h1>} />
                     <Route path="/about" element={<h1>about</h1>} />
                     <Route path="/product/:id" element={<ProductOverview />} />
+                    <Route path="/search" element={<SearchProduct/>} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<CheckOut />} />
                     <Route path="/askAI" element={<AskAI />} />
